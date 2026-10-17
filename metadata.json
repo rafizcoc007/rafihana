@@ -1,0 +1,6 @@
+{
+  "name": "ShebaPoint BD - Digital Citizen Services Portal",
+  "description": "Comprehensive Bangladesh online citizen services platform with bilingual support (Bangla/English), service tracking, instant applications, customer portal, admin panel, and BDIX cPanel PHP deployment bundle.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,37 @@
+# ShebaPoint BD - cPanel Apache Configuration
+# Forces HTTPS, protects config files, and enables clean URLs
+
+Options -Indexes
+ServerSignature Off
+
+# UTF-8 Encoding
+AddDefaultCharset UTF-8
+
+# Protect Sensitive Files
+<FilesMatch "^(config\.php|\.env|\.git|composer\.json|package\.json|database\.sql)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Security Headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Enable Rewrite Engine
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Force HTTPS (AutoSSL on cPanel)
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Clean URL Rewriting for root pages
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME}.php -f
+    RewriteRule ^([a-zA-Z0-9_-]+)$ $1.php [L,QSA]
+</IfModule>
